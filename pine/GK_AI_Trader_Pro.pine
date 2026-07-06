@@ -644,3 +644,35 @@ riskReward = input.float(
 longTarget = entryPrice + (entryPrice - longSL) * riskReward
 
 shortTarget = entryPrice - (shortSL - entryPrice) * riskReward
+//=============================================================================
+// RISK ENGINE
+//=============================================================================
+
+groupRisk = "⚠️ Risk Engine"
+
+enableRiskEngine = input.bool(
+    true,
+    "Enable Risk Engine",
+    group = groupRisk
+)
+
+//----------------------------------------------------
+// Maximum Risk (%)
+//----------------------------------------------------
+
+maxRiskPercent = input.float(
+    1.0,
+    "Maximum Risk %",
+    step = 0.25,
+    group = groupRisk
+)
+
+//----------------------------------------------------
+// Risk Calculation
+//----------------------------------------------------
+
+tradeRisk = math.abs(entryPrice - longSL)
+
+riskAllowed = tradeRisk > 0
+
+riskStateEngine = enableRiskEngine and riskAllowed ? 1 : 0
