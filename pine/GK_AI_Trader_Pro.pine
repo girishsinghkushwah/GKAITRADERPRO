@@ -59,3 +59,31 @@ tradingStyle = input.string(
      options = ["Scalping", "Intraday", "Swing"],
      group = groupStyle
 )
+//=============================================================================
+// THEME ENGINE
+//=============================================================================
+
+groupTheme = "🎨 Theme"
+
+theme = input.string(
+     "Institutional Dark",
+     "Theme",
+     options = [
+         "Institutional Dark",
+         "Light",
+         "Classic"
+     ],
+     group = groupTheme
+)
+
+// Color Palette
+bullColor    = color.lime
+bearColor    = color.red
+neutralColor = color.orange
+
+dashboardBg  = color.rgb(25, 25, 30)
+dashboardTxt = color.white
+
+buyColor     = color.lime
+sellColor    = color.red
+warningColor = color.yellow
