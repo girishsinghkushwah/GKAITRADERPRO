@@ -87,3 +87,36 @@ dashboardTxt = color.white
 buyColor     = color.lime
 sellColor    = color.red
 warningColor = color.yellow
+//=============================================================================
+// UTILITY ENGINE
+//=============================================================================
+
+// Candle Information
+isBullish() =>
+    close > open
+
+isBearish() =>
+    close < open
+
+candleBody() =>
+    math.abs(close - open)
+
+upperWick() =>
+    high - math.max(open, close)
+
+lowerWick() =>
+    math.min(open, close) - low
+
+// Trend Helpers
+isAboveVWAP(vwapValue) =>
+    close > vwapValue
+
+isBelowVWAP(vwapValue) =>
+    close < vwapValue
+
+// Price Helpers
+priceChange() =>
+    close - close[1]
+
+priceChangePercent() =>
+    ((close - close[1]) / close[1]) * 100
