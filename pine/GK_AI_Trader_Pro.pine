@@ -330,3 +330,42 @@ plot(
     title = "MACD",
     display = display.none
 )
+//=============================================================================
+// ADX ENGINE
+//=============================================================================
+
+groupADX = "📊 ADX Engine"
+
+enableADX = input.bool(true, "Enable ADX Engine", group = groupADX)
+
+adxLength = input.int(
+    14,
+    "ADX Length",
+    minval = 2,
+    group = groupADX
+)
+
+adxStrongLevel = input.int(
+    25,
+    "Strong Trend Level",
+    minval = 10,
+    maxval = 50,
+    group = groupADX
+)
+
+// ADX Calculation
+[diplus, diminus, adxValue] = ta.dmi(adxLength, adxLength)
+
+// Trend Strength
+strongTrend = adxValue >= adxStrongLevel
+weakTrend   = adxValue < adxStrongLevel
+
+bullTrend = diplus > diminus
+bearTrend = diminus > diplus
+
+// Hidden Plot
+plot(
+    enableADX ? adxValue : na,
+    title = "ADX",
+    display = display.none
+)
