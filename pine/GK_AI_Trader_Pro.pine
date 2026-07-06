@@ -302,3 +302,31 @@ plot(
     title = "RSI",
     display = display.none
 )
+//=============================================================================
+// MACD ENGINE
+//=============================================================================
+
+groupMACD = "📉 MACD Engine"
+
+enableMACD = input.bool(true, "Enable MACD Engine", group = groupMACD)
+
+macdFast = input.int(12, "Fast Length", group = groupMACD)
+macdSlow = input.int(26, "Slow Length", group = groupMACD)
+macdSignal = input.int(9, "Signal Length", group = groupMACD)
+
+// Calculation
+[macdLine, signalLine, histogram] = ta.macd(close, macdFast, macdSlow, macdSignal)
+
+// States
+macdBullish = macdLine > signalLine
+macdBearish = macdLine < signalLine
+
+macdStrongBull = histogram > 0 and histogram > histogram[1]
+macdStrongBear = histogram < 0 and histogram < histogram[1]
+
+// Hidden Plot
+plot(
+    enableMACD ? macdLine : na,
+    title = "MACD",
+    display = display.none
+)
