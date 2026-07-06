@@ -369,3 +369,42 @@ plot(
     title = "ADX",
     display = display.none
 )
+//=============================================================================
+// ATR ENGINE
+//=============================================================================
+
+groupATR = "📏 ATR Engine"
+
+enableATR = input.bool(true, "Enable ATR Engine", group = groupATR)
+
+atrLength = input.int(
+    14,
+    "ATR Length",
+    minval = 1,
+    group = groupATR
+)
+
+atrMultiplier = input.float(
+    2.0,
+    "ATR Multiplier",
+    minval = 0.5,
+    step = 0.5,
+    group = groupATR
+)
+
+// ATR Calculation
+atrValue = ta.atr(atrLength)
+
+// Volatility State
+highVolatility = atrValue > ta.sma(atrValue, atrLength)
+lowVolatility  = atrValue <= ta.sma(atrValue, atrLength)
+
+// Suggested Stop Loss Distance
+atrSL = atrValue * atrMultiplier
+
+// Hidden Plot
+plot(
+    enableATR ? atrValue : na,
+    title = "ATR",
+    display = display.none
+)
