@@ -536,3 +536,31 @@ decision =
      buyPut ? "BUY PUT" :
      waitTrade ? "WAIT" :
      "NO TRADE"
+     //=============================================================================
+// AI DASHBOARD
+//=============================================================================
+
+groupDashboardUI = "🖥️ AI Dashboard"
+
+showAIDashboard = input.bool(true, "Show AI Dashboard", group = groupDashboardUI)
+
+var table aiDashboard = table.new(position.top_right, 2, 6, border_width = 1)
+
+if barstate.islast and showAIDashboard
+    table.cell(aiDashboard, 0, 0, "GK AI Trader", bgcolor=color.blue, text_color=color.white)
+    table.cell(aiDashboard, 1, 0, "v0.1.16", bgcolor=color.blue, text_color=color.white)
+
+    table.cell(aiDashboard, 0, 1, "AI Score")
+    table.cell(aiDashboard, 1, 1, str.tostring(aiScore))
+
+    table.cell(aiDashboard, 0, 2, "Decision")
+    table.cell(aiDashboard, 1, 2, decision)
+
+    table.cell(aiDashboard, 0, 3, "Trend")
+    table.cell(aiDashboard, 1, 3, trendState == 1 ? "Bullish" : trendState == -1 ? "Bearish" : "Neutral")
+
+    table.cell(aiDashboard, 0, 4, "Momentum")
+    table.cell(aiDashboard, 1, 4, momentumState == 1 ? "Bullish" : momentumState == -1 ? "Bearish" : "Neutral")
+
+    table.cell(aiDashboard, 0, 5, "Volume")
+    table.cell(aiDashboard, 1, 5, volumeSpike ? "High" : "Normal")
