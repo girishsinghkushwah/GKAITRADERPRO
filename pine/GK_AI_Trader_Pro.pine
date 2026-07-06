@@ -255,3 +255,50 @@ plot(
      title = "Average Volume",
      display = display.none
 )
+//=============================================================================
+// RSI ENGINE
+//=============================================================================
+
+groupRSI = "📈 RSI Engine"
+
+enableRSI = input.bool(true, "Enable RSI Engine", group = groupRSI)
+
+rsiLength = input.int(
+    14,
+    "RSI Length",
+    minval = 2,
+    group = groupRSI
+)
+
+rsiOB = input.int(
+    70,
+    "Overbought",
+    minval = 50,
+    maxval = 100,
+    group = groupRSI
+)
+
+rsiOS = input.int(
+    30,
+    "Oversold",
+    minval = 0,
+    maxval = 50,
+    group = groupRSI
+)
+
+// RSI Calculation
+rsiValue = ta.rsi(close, rsiLength)
+
+// Momentum States
+rsiStrongBull = rsiValue >= 70
+rsiBull       = rsiValue > 55 and rsiValue < 70
+rsiNeutral    = rsiValue >= 45 and rsiValue <= 55
+rsiBear       = rsiValue < 45 and rsiValue > 30
+rsiStrongBear = rsiValue <= 30
+
+// Hidden Plot (Future AI Use)
+plot(
+    enableRSI ? rsiValue : na,
+    title = "RSI",
+    display = display.none
+)
