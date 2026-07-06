@@ -676,3 +676,24 @@ tradeRisk = math.abs(entryPrice - longSL)
 riskAllowed = tradeRisk > 0
 
 riskStateEngine = enableRiskEngine and riskAllowed ? 1 : 0
+//=============================================================================
+// SESSION ENGINE
+//=============================================================================
+
+groupSession = "🕒 Session Engine"
+
+enableSessionEngine = input.bool(
+    true,
+    "Enable Session Filter",
+    group = groupSession
+)
+
+tradeSession = input.session(
+    "0915-1530",
+    "Trading Session",
+    group = groupSession
+)
+
+sessionActive = not na(time(timeframe.period, tradeSession))
+
+allowTrading = enableSessionEngine ? sessionActive : true
