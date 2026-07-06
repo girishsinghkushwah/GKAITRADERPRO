@@ -716,3 +716,17 @@ if barstate.islast and showInstDash
 
     table.cell(instDashboard, 0, 0, "GK AI TRADER PRO", bgcolor=instDashBg, text_color=color.yellow)
     table.cell(instDashboard, 1, 0, "v0.2.1", bgcolor=instDashBg, text_color=color.aqua)
+table.cell(instDashboard, 0, 1, "AI Score", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 1, str.tostring(aiScore), bgcolor=instDashBg, text_color=color.lime)
+
+table.cell(instDashboard, 0, 2, "Decision", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 2, decision, bgcolor=instDashBg, text_color=color.yellow)
+
+table.cell(instDashboard, 0, 3, "Trend", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 3, trendState == 1 ? "Bullish" : trendState == -1 ? "Bearish" : "Neutral", bgcolor=instDashBg, text_color=color.aqua)
+
+table.cell(instDashboard, 0, 4, "Momentum", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 4, momentumState == 1 ? "Bullish" : momentumState == -1 ? "Bearish" : "Neutral", bgcolor=instDashBg, text_color=color.orange)
+
+table.cell(instDashboard, 0, 5, "Session", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 5, allowTrading ? "ACTIVE" : "CLOSED", bgcolor=instDashBg, text_color=allowTrading ? color.lime : color.red)
