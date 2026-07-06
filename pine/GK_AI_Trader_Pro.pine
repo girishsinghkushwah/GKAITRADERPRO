@@ -190,3 +190,30 @@ plot(enableEMA ? emaSlow : na,
      title = "EMA Slow",
      color = bearColor,
      linewidth = 2)
+     //=============================================================================
+// VWAP ENGINE
+//=============================================================================
+
+groupVWAP = "📊 VWAP Engine"
+
+enableVWAP = input.bool(true, "Enable VWAP Engine", group = groupVWAP)
+showVWAP   = input.bool(true, "Show VWAP", group = groupVWAP)
+
+// VWAP
+vwapValue = ta.vwap(close)
+
+// Market State
+priceAboveVWAP = close > vwapValue
+priceBelowVWAP = close < vwapValue
+priceOnVWAP    = close == vwapValue
+
+// Distance
+vwapDistance = math.abs(close - vwapValue)
+
+// Plot
+plot(
+     enableVWAP and showVWAP ? vwapValue : na,
+     title = "VWAP",
+     color = color.aqua,
+     linewidth = 2
+)
