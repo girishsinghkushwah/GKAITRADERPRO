@@ -217,3 +217,41 @@ plot(
      color = color.aqua,
      linewidth = 2
 )
+//=============================================================================
+// VOLUME ENGINE
+//=============================================================================
+
+groupVolume = "📊 Volume Engine"
+
+enableVolume = input.bool(true, "Enable Volume Engine", group = groupVolume)
+
+volumeLength = input.int(
+     20,
+     "Average Volume Length",
+     minval = 1,
+     group = groupVolume
+)
+
+rvolThreshold = input.float(
+     1.5,
+     "RVOL Threshold",
+     step = 0.1,
+     group = groupVolume
+)
+
+// Average Volume
+avgVolume = ta.sma(volume, volumeLength)
+
+// Relative Volume
+rvol = avgVolume > 0 ? volume / avgVolume : 0
+
+// Volume Conditions
+highVolume = volume > avgVolume
+volumeSpike = rvol >= rvolThreshold
+
+// Plot Average Volume (Hidden)
+plot(
+     enableVolume ? avgVolume : na,
+     title = "Average Volume",
+     display = display.none
+)
