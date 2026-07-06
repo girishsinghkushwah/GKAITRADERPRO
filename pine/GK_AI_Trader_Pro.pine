@@ -1,0 +1,32 @@
+</> pine
+//@version=6
+
+//=============================================================================
+// GK AI TRADER PRO
+// Institutional Decision Engine
+// Version : 0.1.0
+// Author  : Girish Kushwah + ChatGPT
+//=============================================================================
+
+indicator(
+     title = "GK AI Trader Pro",
+     shorttitle = "GK AI",
+     overlay = true,
+     max_labels_count = 500,
+     max_lines_count = 500,
+     max_boxes_count = 500
+)
+
+//=============================================================================
+// PROJECT INFORMATION
+//=============================================================================
+
+var string PROJECT_NAME    = "GK AI Trader Pro"
+var string VERSION         = "0.1.0"
+var string BUILD_DATE      = "2026-07-07"
+
+var string DEVELOPER       = "Girish Kushwah"
+var string ENGINE          = "Institutional Decision Engine"
+
+var bool INITIALIZED = true
+plot(close, title="Foundation")
