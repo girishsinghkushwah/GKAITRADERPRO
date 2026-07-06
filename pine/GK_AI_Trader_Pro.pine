@@ -501,3 +501,38 @@ marketState =
      strengthState +
      volumeState +
      riskState
+     //=============================================================================
+// DECISION ENGINE
+//=============================================================================
+
+groupDecision = "🎯 Decision Engine"
+
+enableDecision = input.bool(
+    true,
+    "Enable Decision Engine",
+    group = groupDecision
+)
+
+// Decision Score
+buyCall =
+     aiScore >= 80 and
+     trendState == 1 and
+     momentumState == 1
+
+buyPut =
+     aiScore >= 80 and
+     trendState == -1 and
+     momentumState == -1
+
+waitTrade =
+     aiScore >= 60 and aiScore < 80
+
+noTrade =
+     aiScore < 60
+
+// Decision Text
+decision =
+     buyCall ? "BUY CALL" :
+     buyPut ? "BUY PUT" :
+     waitTrade ? "WAIT" :
+     "NO TRADE"
