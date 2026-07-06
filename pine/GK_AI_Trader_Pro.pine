@@ -1,4 +1,3 @@
-</> pine
 //@version=6
 
 //=============================================================================
@@ -30,3 +29,33 @@ var string ENGINE          = "Institutional Decision Engine"
 
 var bool INITIALIZED = true
 plot(close, title="Foundation")
+//=============================================================================
+// INPUT SETTINGS
+//=============================================================================
+
+// General
+groupGeneral = "⚙️ General"
+
+showDashboard = input.bool(true, "Show Dashboard", group = groupGeneral)
+showSignals   = input.bool(true, "Show Buy/Sell Signals", group = groupGeneral)
+enableAlerts  = input.bool(true, "Enable Alerts", group = groupGeneral)
+
+// Market
+groupMarket = "📈 Market"
+
+marketType = input.string(
+     "NIFTY",
+     "Market",
+     options = ["NIFTY", "SENSEX", "BANKNIFTY"],
+     group = groupMarket
+)
+
+// Trading Style
+groupStyle = "🎯 Trading Style"
+
+tradingStyle = input.string(
+     "Intraday",
+     "Style",
+     options = ["Scalping", "Intraday", "Swing"],
+     group = groupStyle
+)
