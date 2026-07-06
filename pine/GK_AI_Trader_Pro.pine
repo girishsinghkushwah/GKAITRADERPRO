@@ -120,3 +120,73 @@ priceChange() =>
 
 priceChangePercent() =>
     ((close - close[1]) / close[1]) * 100
+    //=============================================================================
+// DASHBOARD FOUNDATION
+//=============================================================================
+
+groupDashboard = "📊 Dashboard"
+
+dashboardPosition = input.string(
+     "Top Right",
+     "Position",
+     options = [
+          "Top Right",
+          "Top Left",
+          "Bottom Right",
+          "Bottom Left"
+     ],
+     group = groupDashboard
+)
+
+dashboardSize = input.string(
+     "Normal",
+     "Size",
+     options = [
+          "Small",
+          "Normal",
+          "Large"
+     ],
+     group = groupDashboard
+)
+
+showVersion = input.bool(
+     true,
+     "Show Version",
+     group = groupDashboard
+)
+//=============================================================================
+// EMA ENGINE
+//=============================================================================
+
+groupEMA = "📈 EMA Engine"
+
+enableEMA = input.bool(true, "Enable EMA Engine", group = groupEMA)
+
+emaFastLength = input.int(8, "Fast EMA", minval = 1, group = groupEMA)
+emaSlowLength = input.int(14, "Slow EMA", minval = 1, group = groupEMA)
+
+emaFast = ta.ema(close, emaFastLength)
+emaSlow = ta.ema(close, emaSlowLength)
+
+// Trend State
+trendBullish = emaFast > emaSlow
+trendBearish = emaFast < emaSlow
+trendNeutral = emaFast == emaSlow
+
+// EMA Distance
+emaDistance = math.abs(emaFast - emaSlow)
+
+// EMA Slope
+emaFastSlope = emaFast - emaFast[1]
+emaSlowSlope = emaSlow - emaSlow[1]
+
+// Plots
+plot(enableEMA ? emaFast : na,
+     title = "EMA Fast",
+     color = bullColor,
+     linewidth = 2)
+
+plot(enableEMA ? emaSlow : na,
+     title = "EMA Slow",
+     color = bearColor,
+     linewidth = 2)
