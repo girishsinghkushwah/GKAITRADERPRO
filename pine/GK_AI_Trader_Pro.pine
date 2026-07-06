@@ -601,3 +601,46 @@ alertcondition(
     title = "WAIT",
     message = "GK AI Trader Pro : WAIT"
 )
+//=============================================================================
+// TRADE MANAGEMENT ENGINE
+//=============================================================================
+
+groupTrade = "💼 Trade Management"
+
+enableTradeManagement = input.bool(
+    true,
+    "Enable Trade Management",
+    group = groupTrade
+)
+
+//----------------------------------------------------
+// Entry
+//----------------------------------------------------
+
+entryPrice = close
+
+//----------------------------------------------------
+// Stop Loss
+//----------------------------------------------------
+
+longSL = low - atrValue
+shortSL = high + atrValue
+
+//----------------------------------------------------
+// Risk Reward
+//----------------------------------------------------
+
+riskReward = input.float(
+    2.0,
+    "Risk Reward",
+    step = 0.5,
+    group = groupTrade
+)
+
+//----------------------------------------------------
+// Targets
+//----------------------------------------------------
+
+longTarget = entryPrice + (entryPrice - longSL) * riskReward
+
+shortTarget = entryPrice - (shortSL - entryPrice) * riskReward
