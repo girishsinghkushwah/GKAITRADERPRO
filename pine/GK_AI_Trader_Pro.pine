@@ -564,3 +564,40 @@ if barstate.islast and showAIDashboard
 
     table.cell(aiDashboard, 0, 5, "Volume")
     table.cell(aiDashboard, 1, 5, volumeSpike ? "High" : "Normal")
+    //=============================================================================
+// ALERT ENGINE
+//=============================================================================
+
+groupAlerts = "🔔 Alert Engine"
+
+enableAIAlerts = input.bool(true, "Enable Alerts", group = groupAlerts)
+
+//----------------------------------------------------
+// Alert Conditions
+//----------------------------------------------------
+
+buyCallAlert = enableAIAlerts and buyCall
+buyPutAlert  = enableAIAlerts and buyPut
+waitAlert    = enableAIAlerts and waitTrade
+
+//----------------------------------------------------
+// TradingView Alerts
+//----------------------------------------------------
+
+alertcondition(
+    buyCallAlert,
+    title = "BUY CALL",
+    message = "GK AI Trader Pro : BUY CALL"
+)
+
+alertcondition(
+    buyPutAlert,
+    title = "BUY PUT",
+    message = "GK AI Trader Pro : BUY PUT"
+)
+
+alertcondition(
+    waitAlert,
+    title = "WAIT",
+    message = "GK AI Trader Pro : WAIT"
+)
