@@ -458,3 +458,46 @@ riskScore += lowVolatility ? 10 : 0
 aiScore = trendScore + momentumScore + strengthScore + riskScore
 
 confidence = aiScore
+//=============================================================================
+// CORE STATE ENGINE
+//=============================================================================
+
+groupCore = "🧠 Core State Engine"
+
+enableCore = input.bool(
+    true,
+    "Enable Core State Engine",
+    group = groupCore
+)
+
+//======================================================
+// STATE VALUES
+//======================================================
+
+// Trend
+trendState = trendBullish ? 1 : trendBearish ? -1 : 0
+
+// Momentum
+momentumState =
+     (rsiBull or rsiStrongBull) and macdBullish ? 1 :
+     (rsiBear or rsiStrongBear) and macdBearish ? -1 : 0
+
+// Strength
+strengthState = strongTrend ? 1 : 0
+
+// Volume
+volumeState = volumeSpike ? 1 : 0
+
+// Risk
+riskState = lowVolatility ? 1 : 0
+
+//======================================================
+// MASTER STATE
+//======================================================
+
+marketState =
+     trendState +
+     momentumState +
+     strengthState +
+     volumeState +
+     riskState
