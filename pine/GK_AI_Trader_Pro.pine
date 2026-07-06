@@ -697,3 +697,22 @@ tradeSession = input.session(
 sessionActive = not na(time(timeframe.period, tradeSession))
 
 allowTrading = enableSessionEngine ? sessionActive : true
+//=============================================================================
+// INSTITUTIONAL DASHBOARD
+// MODULE 2.1 - PART A
+//=============================================================================
+
+groupInstDash = "🏦 Institutional Dashboard"
+
+showInstDash = input.bool(true, "Show Institutional Dashboard", group=groupInstDash)
+
+instDashBg = input.color(color.new(color.black, 10), "Dashboard Background", group=groupInstDash)
+
+instDashText = input.color(color.white, "Dashboard Text", group=groupInstDash)
+
+var table instDashboard = table.new(position.top_right, 2, 15, border_width=1)
+if barstate.islast and showInstDash
+    table.clear(instDashboard, 0, 0)
+
+    table.cell(instDashboard, 0, 0, "GK AI TRADER PRO", bgcolor=instDashBg, text_color=color.yellow)
+    table.cell(instDashboard, 1, 0, "v0.2.1", bgcolor=instDashBg, text_color=color.aqua)
