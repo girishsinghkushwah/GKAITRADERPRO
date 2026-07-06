@@ -408,3 +408,53 @@ plot(
     title = "ATR",
     display = display.none
 )
+//=============================================================================
+// AI SCORE ENGINE
+//=============================================================================
+
+groupAI = "🧠 AI Score"
+
+showAIScore = input.bool(true, "Enable AI Score", group = groupAI)
+
+//----------------------------------------------------
+// Trend Score
+//----------------------------------------------------
+
+trendScore = 0
+
+trendScore += trendBullish ? 20 : 0
+trendScore += priceAboveVWAP ? 20 : 0
+
+//----------------------------------------------------
+// Momentum Score
+//----------------------------------------------------
+
+momentumScore = 0
+
+momentumScore += rsiBull or rsiStrongBull ? 15 : 0
+momentumScore += macdBullish ? 15 : 0
+
+//----------------------------------------------------
+// Strength Score
+//----------------------------------------------------
+
+strengthScore = 0
+
+strengthScore += strongTrend ? 10 : 0
+strengthScore += volumeSpike ? 10 : 0
+
+//----------------------------------------------------
+// Risk Score
+//----------------------------------------------------
+
+riskScore = 0
+
+riskScore += lowVolatility ? 10 : 0
+
+//----------------------------------------------------
+// Final Score
+//----------------------------------------------------
+
+aiScore = trendScore + momentumScore + strengthScore + riskScore
+
+confidence = aiScore
