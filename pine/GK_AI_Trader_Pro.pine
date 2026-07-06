@@ -730,3 +730,4 @@ table.cell(instDashboard, 1, 4, momentumState == 1 ? "Bullish" : momentumState =
 
 table.cell(instDashboard, 0, 5, "Session", bgcolor=instDashBg, text_color=instDashText)
 table.cell(instDashboard, 1, 5, allowTrading ? "ACTIVE" : "CLOSED", bgcolor=instDashBg, text_color=allowTrading ? color.lime : color.red)
+
