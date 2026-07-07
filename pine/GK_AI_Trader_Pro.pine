@@ -750,4 +750,25 @@ table.cell(instDashboard, 1, 4, momentumState == 1 ? "Bullish" : momentumState =
 
 table.cell(instDashboard, 0, 5, "Session", bgcolor=instDashBg, text_color=instDashText)
 table.cell(instDashboard, 1, 5, allowTrading ? "ACTIVE" : "CLOSED", bgcolor=instDashBg, text_color=allowTrading ? color.lime : color.red)
+//=============================================================================
+// BOS ENGINE
+// MODULE 2.2
+//=============================================================================
 
+groupBOS = "🏗️ BOS Engine"
+
+enableBOS = input.bool(true, "Enable BOS", group=groupBOS)
+
+bosSwingLength = input.int(5, "Swing Length", minval=2, group=groupBOS)
+
+// Swing High / Low
+swingHigh = ta.pivothigh(high, bosSwingLength, bosSwingLength)
+swingLow  = ta.pivotlow(low, bosSwingLength, bosSwingLength)
+
+// Last Confirmed Swing Levels
+lastSwingHigh = ta.valuewhen(not na(swingHigh), swingHigh, 0)
+lastSwingLow  = ta.valuewhen(not na(swingLow), swingLow, 0)
+
+// BOS Conditions
+bullishBOS = enableBOS and not na(lastSwingHigh) and close > lastSwingHigh
+bearishBOS = enableBOS and not na(lastSwingLow) and close < lastSwingLow
