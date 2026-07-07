@@ -698,6 +698,26 @@ sessionActive = not na(time(timeframe.period, tradeSession))
 
 allowTrading = enableSessionEngine ? sessionActive : true
 //=============================================================================
+// INDIA VIX ENGINE
+// MODULE 1.21
+//=============================================================================
+
+groupVIX = "📉 India VIX"
+
+enableVIX = input.bool(true, "Enable India VIX", group = groupVIX)
+
+vixSymbol = input.symbol("NSE:INDIAVIX", "India VIX Symbol", group = groupVIX)
+
+vixValue = request.security(vixSymbol, timeframe.period, close)
+vixPrevious = request.security(vixSymbol, timeframe.period, close[1])
+
+vixRising = vixValue > vixPrevious
+vixFalling = vixValue < vixPrevious
+
+vixHigh = vixValue >= 20
+vixMedium = vixValue >= 15 and vixValue < 20
+vixLow = vixValue < 15
+//=============================================================================
 // INSTITUTIONAL DASHBOARD
 // MODULE 2.1 - PART A
 //=============================================================================
