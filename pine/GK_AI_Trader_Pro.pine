@@ -820,3 +820,24 @@ bullishOBLow = low[1]
 
 bearishOBHigh = high[1]
 bearishOBLow = low[1]
+//=============================================================================
+// FAIR VALUE GAP ENGINE
+// MODULE 2.6
+//=============================================================================
+
+groupFVG = "🟨 Fair Value Gap"
+
+enableFVG = input.bool(true, "Enable FVG", group = groupFVG)
+
+// Bullish FVG
+bullishFVG = enableFVG and low > high[2]
+
+// Bearish FVG
+bearishFVG = enableFVG and high < low[2]
+
+// FVG Levels
+bullishFVGTop = low
+bullishFVGBottom = high[2]
+
+bearishFVGTop = low[2]
+bearishFVGBottom = high
