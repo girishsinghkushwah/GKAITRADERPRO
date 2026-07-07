@@ -785,3 +785,20 @@ enableCHOCH = input.bool(true, "Enable CHOCH", group = groupCHOCH)
 bullishCHOCH = enableCHOCH and bearishBOS[1] and bullishBOS
 
 bearishCHOCH = enableCHOCH and bullishBOS[1] and bearishBOS
+//=============================================================================
+// LIQUIDITY SWEEP ENGINE
+// MODULE 2.4
+//=============================================================================
+
+groupLiquidity = "💧 Liquidity Sweep"
+
+enableLiquidity = input.bool(true, "Enable Liquidity Sweep", group = groupLiquidity)
+
+lookbackLiquidity = input.int(20, "Liquidity Lookback", minval = 5, group = groupLiquidity)
+
+highestLiquidity = ta.highest(high, lookbackLiquidity)
+lowestLiquidity = ta.lowest(low, lookbackLiquidity)
+
+bullishLiquiditySweep = enableLiquidity and high > highestLiquidity[1] and close < highestLiquidity[1]
+
+bearishLiquiditySweep = enableLiquidity and low < lowestLiquidity[1] and close > lowestLiquidity[1]
