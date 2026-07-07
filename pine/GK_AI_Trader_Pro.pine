@@ -802,3 +802,21 @@ lowestLiquidity = ta.lowest(low, lookbackLiquidity)
 bullishLiquiditySweep = enableLiquidity and high > highestLiquidity[1] and close < highestLiquidity[1]
 
 bearishLiquiditySweep = enableLiquidity and low < lowestLiquidity[1] and close > lowestLiquidity[1]
+//=============================================================================
+// ORDER BLOCK ENGINE
+// MODULE 2.5
+//=============================================================================
+
+groupOB = "📦 Order Block"
+
+enableOB = input.bool(true, "Enable Order Blocks", group = groupOB)
+
+bullishOB = enableOB and close[1] < open[1] and bullishBOS
+
+bearishOB = enableOB and close[1] > open[1] and bearishBOS
+
+bullishOBHigh = high[1]
+bullishOBLow = low[1]
+
+bearishOBHigh = high[1]
+bearishOBLow = low[1]
