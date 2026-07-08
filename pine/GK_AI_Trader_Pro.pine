@@ -458,6 +458,7 @@ riskScore += lowVolatility ? 10 : 0
 aiScore = trendScore + momentumScore + strengthScore + riskScore
 
 confidence = aiScore
+
 //=============================================================================
 // CORE STATE ENGINE
 //=============================================================================
@@ -841,3 +842,51 @@ bullishFVGBottom = high[2]
 
 bearishFVGTop = low[2]
 bearishFVGBottom = high
+//=============================================================================
+// INSTITUTIONAL AI DECISION ENGINE
+// MODULE 2.7 - PART A
+//=============================================================================
+
+institutionalScore = 0
+
+institutionalScore += bullishBOS ? 10 : 0
+institutionalScore += bullishCHOCH ? 8 : 0
+institutionalScore += bullishLiquiditySweep ? 10 : 0
+institutionalScore += bullishOB ? 8 : 0
+institutionalScore += bullishFVG ? 6 : 0
+
+institutionalScore += vixLow ? 5 : 0
+institutionalScore -= vixHigh ? 5 : 0
+
+finalAIScore = math.min(aiScore + institutionalScore, 100)
+finalConfidence = finalAIScore
+//=============================================================================
+// INSTITUTIONAL DECISION
+// MODULE 2.7 - PART B
+//=============================================================================
+
+institutionalDecision =
+     finalAIScore >= 85 ? "STRONG BUY" :
+     finalAIScore >= 70 ? "BUY" :
+     finalAIScore >= 45 ? "WAIT" :
+     finalAIScore >= 25 ? "SELL" :
+     "STRONG SELL"
+
+institutionalBuy = finalAIScore >= 70
+
+institutionalSell = finalAIScore <= 25
+
+institutionalWait = finalAIScore > 25 and finalAIScore < 70
+//=============================================================================
+// MODULE 2.7 - PART C
+// DECISION CONFIDENCE
+//=============================================================================
+
+decisionReason =
+     institutionalDecision == "STRONG BUY" ? "Institutional Bullish Confirmation" :
+     institutionalDecision == "BUY" ? "Bullish Confirmation" :
+     institutionalDecision == "WAIT" ? "Mixed Signals" :
+     institutionalDecision == "SELL" ? "Bearish Confirmation" :
+     "Institutional Bearish Confirmation"
+
+decisionConfidence = str.tostring(finalConfidence) + "%"
