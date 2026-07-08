@@ -1041,3 +1041,214 @@ alertcondition(sellSignalAlert, title="GK Sell", message="GK AI Trader Pro : SEL
 
 alertcondition(alertWait, title="GK Wait", message="GK AI Trader Pro : WAIT")
 
+//====================================================
+// MODULE 3.1
+// INSTITUTIONAL ENTRY ENGINE
+//====================================================
+
+groupEntry = "🚀 Institutional Entry Engine"
+
+enableEntryEngine = input.bool(true, "Enable Entry Engine", group=groupEntry)
+
+// Buy Conditions
+longEntry = enableEntryEngine and finalAIScore >= 70 and trendBullish and close > vwapValue
+
+// Sell Conditions
+shortEntry = enableEntryEngine and finalAIScore <= 30 and trendBearish and close < vwapValue
+
+plotshape(
+     longEntry,
+     title="Institutional Buy",
+     style=shape.triangleup,
+     location=location.belowbar,
+     color=color.lime,
+     size=size.small,
+     text="BUY"
+)
+
+plotshape(
+     shortEntry,
+     title="Institutional Sell",
+     style=shape.triangledown,
+     location=location.abovebar,
+     color=color.red,
+     size=size.small,
+     text="SELL"
+)
+
+//====================================================
+// MODULE 3.2
+// ATR STOP LOSS ENGINE
+//====================================================
+
+groupATRStop = "🛡 ATR Stop"
+
+enableATRStop = input.bool(
+    true,
+    "Enable ATR Stop",
+    group = groupATRStop
+)
+
+longStopLoss = enableATRStop ? close - atrValue * atrMultiplier : na
+shortStopLoss = enableATRStop ? close + atrValue * atrMultiplier : na
+
+plot(longStopLoss,
+     title="Long Stop",
+     color=color.red,
+     linewidth=2)
+
+plot(shortStopLoss,
+     title="Short Stop",
+     color=color.green,
+     linewidth=2)
+     //======================================================
+// MODULE 3.3
+// TRAILING STOP ENGINE
+//======================================================
+
+groupTrail = "🔄 Trailing Stop"
+
+// Master Switch
+enableTrailing = input.bool(
+    true,
+    "Enable Trailing Stop",
+    group = groupTrail
+)
+
+// Trailing Type
+trailingType = input.string(
+    "ATR",
+    "Trailing Type",
+    options = ["ATR", "Swing"],
+    group = groupTrail
+)
+
+// ATR Multiplier
+trailATRMultiplier = input.float(
+    2.0,
+    "ATR Trail Multiplier",
+    minval = 0.5,
+    step = 0.5,
+    group = groupTrail
+)
+
+// Swing Lookback
+swingLookback = input.int(
+    5,
+    "Swing Lookback",
+    minval = 2,
+    maxval = 50,
+    group = groupTrail
+)
+
+// Break Even
+enableBreakEven = input.bool(
+    true,
+    "Enable Break Even",
+    group = groupTrail
+)
+
+breakEvenRR = input.float(
+    1.0,
+    "Break Even RR",
+    minval = 0.5,
+    step = 0.5,
+    group = groupTrail
+)
+//======================================================
+// MODULE 3.3 - PART 2
+// BREAK EVEN ENGINE (INDICATOR)
+//======================================================
+
+longEntryPrice = longEntry ? close : na
+shortEntryPrice = shortEntry ? close : na
+
+breakEvenLongPrice = longEntry ? longEntryPrice : na
+breakEvenShortPrice = shortEntry ? shortEntryPrice : na
+
+plot(
+    enableBreakEven ? breakEvenLongPrice : na,
+    title="Break Even Long",
+    color=color.blue,
+    linewidth=2
+)
+
+plot(
+    enableBreakEven ? breakEvenShortPrice : na,
+    title="Break Even Short",
+    color=color.purple,
+    linewidth=2
+)
+//======================================================
+// MODULE 3.3 - PART 3
+// ATR TRAILING STOP ENGINE
+//======================================================
+
+// ATR Based Trailing Stop
+atrTrailLong = enableTrailing and trailingType == "ATR" ? close - (atrValue * trailATRMultiplier) : na
+
+atrTrailShort = enableTrailing and trailingType == "ATR" ? close + (atrValue * trailATRMultiplier) : na
+
+// Plot ATR Trail
+plot(
+    atrTrailLong,
+    title = "ATR Trail Long",
+    color = color.orange,
+    linewidth = 2
+)
+
+plot(
+    atrTrailShort,
+    title = "ATR Trail Short",
+    color = color.yellow,
+    linewidth = 2
+)
+//======================================================
+// MODULE 3.3 - PART 4
+// SWING TRAILING STOP ENGINE
+//======================================================
+
+// Swing Levels
+swingLowTrail = ta.lowest(low, swingLookback)
+swingHighTrail = ta.highest(high, swingLookback)
+
+// Swing Trailing Stop
+swingTrailLong = enableTrailing and trailingType == "Swing" ? swingLowTrail : na
+swingTrailShort = enableTrailing and trailingType == "Swing" ? swingHighTrail : na
+
+// Plot Swing Trail
+plot(
+    swingTrailLong,
+    title = "Swing Trail Long",
+    color = color.teal,
+    linewidth = 2
+)
+
+plot(
+    swingTrailShort,
+    title = "Swing Trail Short",
+    color = color.maroon,
+    linewidth = 2
+)
+//======================================================
+// MODULE 3.3 - PART 5
+// FINAL TRAILING ENGINE
+//======================================================
+
+finalLongTrail = trailingType == "ATR" ? atrTrailLong : swingTrailLong
+finalShortTrail = trailingType == "ATR" ? atrTrailShort : swingTrailShort
+
+// Plot Final Trail
+plot(
+    finalLongTrail,
+    title = "Final Long Trail",
+    color = color.green,
+    linewidth = 3
+)
+
+plot(
+    finalShortTrail,
+    title = "Final Short Trail",
+    color = color.red,
+    linewidth = 3
+)
