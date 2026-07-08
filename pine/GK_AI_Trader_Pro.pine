@@ -1418,3 +1418,144 @@ trailingStatus = trailingActive ? "ACTIVE" : "OFF"
 tradeClosed = (longTradeActive and longT3Hit) or (shortTradeActive and shortT3Hit)
 
 tradeResult = tradeClosed ? "TARGET ACHIEVED" : "RUNNING"
+//======================================================
+// MODULE 3.6 - PART 1
+// PROFESSIONAL LABELS
+//======================================================
+
+// Long Active Label
+plotshape(
+     longTradeActive,
+     title="Long Active",
+     style=shape.labelup,
+     location=location.belowbar,
+     color=color.lime,
+     text="LONG",
+     textcolor=color.white,
+     size=size.tiny)
+
+// Short Active Label
+plotshape(
+     shortTradeActive,
+     title="Short Active",
+     style=shape.labeldown,
+     location=location.abovebar,
+     color=color.red,
+     text="SHORT",
+     textcolor=color.white,
+     size=size.tiny)
+     //======================================================
+// MODULE 3.6 - PART 2
+// TARGET HIT LABELS
+//======================================================
+
+// T1 Labels
+plotshape(
+     longT1Hit and not longT1Hit[1],
+     title="Long T1",
+     style=shape.labelup,
+     location=location.abovebar,
+     color=color.green,
+     text="T1",
+     textcolor=color.white,
+     size=size.tiny)
+
+plotshape(
+     shortT1Hit and not shortT1Hit[1],
+     title="Short T1",
+     style=shape.labeldown,
+     location=location.belowbar,
+     color=color.red,
+     text="T1",
+     textcolor=color.white,
+     size=size.tiny)
+     //======================================================
+// MODULE 3.6 - PART 3
+// T2 & T3 LABELS
+//======================================================
+
+// Long T2
+plotshape(
+     longT2Hit and not longT2Hit[1],
+     title="Long T2",
+     style=shape.labelup,
+     location=location.abovebar,
+     color=color.blue,
+     text="T2",
+     textcolor=color.white,
+     size=size.tiny)
+
+// Short T2
+plotshape(
+     shortT2Hit and not shortT2Hit[1],
+     title="Short T2",
+     style=shape.labeldown,
+     location=location.belowbar,
+     color=color.orange,
+     text="T2",
+     textcolor=color.white,
+     size=size.tiny)
+
+// Long T3
+plotshape(
+     longT3Hit and not longT3Hit[1],
+     title="Long T3",
+     style=shape.labelup,
+     location=location.abovebar,
+     color=color.purple,
+     text="T3",
+     textcolor=color.white,
+     size=size.small)
+
+// Short T3
+plotshape(
+     shortT3Hit and not shortT3Hit[1],
+     title="Short T3",
+     style=shape.labeldown,
+     location=location.belowbar,
+     color=color.maroon,
+     text="T3",
+     textcolor=color.white,
+     size=size.small)
+     //======================================================
+// MODULE 3.6 - PART 4
+// BREAK-EVEN LABEL
+//======================================================
+
+plotshape(
+     breakEvenActive and not breakEvenActive[1],
+     title = "Break Even Active",
+     style = shape.diamond,
+     location = location.abovebar,
+     color = color.aqua,
+     text = "BE",
+     textcolor = color.black,
+     size = size.small)
+     //======================================================
+// MODULE 3.6 - PART 5
+// TRAILING STOP LABEL
+//======================================================
+
+plotshape(
+     trailingActive and not trailingActive[1],
+     title = "Trailing Active",
+     style = shape.circle,
+     location = location.belowbar,
+     color = color.orange,
+     text = "TRAIL",
+     textcolor = color.white,
+     size = size.small)
+     //======================================================
+// MODULE 3.6 - PART 6
+// TRADE CLOSED LABEL
+//======================================================
+
+plotshape(
+     tradeClosed and not tradeClosed[1],
+     title = "Trade Closed",
+     style = shape.xcross,
+     location = location.abovebar,
+     color = color.red,
+     text = "EXIT",
+     textcolor = color.white,
+     size = size.small)
