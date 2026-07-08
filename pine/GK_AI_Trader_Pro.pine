@@ -1314,3 +1314,84 @@ tradeDirection =
      longEntry ? 1 :
      shortEntry ? -1 :
      0
+  //======================================================
+// TRADE ACTIVE STATE
+//======================================================
+
+var bool tradeActive = false
+var bool longTradeActive = false
+var bool shortTradeActive = false
+
+if longEntry
+    tradeActive := true
+    longTradeActive := true
+    shortTradeActive := false
+
+if shortEntry
+    tradeActive := true
+    shortTradeActive := true
+    longTradeActive := false   
+    //======================================================
+// MODULE 3.5 - PART 2
+// T1 HIT DETECTION
+//======================================================
+
+var bool longT1Hit = false
+var bool shortT1Hit = false
+
+// Reset on new trade
+if longEntry
+    longT1Hit := false
+
+if shortEntry
+    shortT1Hit := false
+
+// Detect T1 Hit
+if longTradeActive and high >= longTarget1
+    longT1Hit := true
+
+if shortTradeActive and low <= shortTarget1
+    shortT1Hit := true
+    //======================================================
+// MODULE 3.5 - PART 3
+// T2 HIT DETECTION
+//======================================================
+
+var bool longT2Hit = false
+var bool shortT2Hit = false
+
+// Reset on new trade
+if longEntry
+    longT2Hit := false
+
+if shortEntry
+    shortT2Hit := false
+
+// Detect T2 Hit
+if longTradeActive and longT1Hit and high >= longTarget2
+    longT2Hit := true
+
+if shortTradeActive and shortT1Hit and low <= shortTarget2
+    shortT2Hit := true
+ //======================================================
+// MODULE 3.5 - PART 4
+// T3 HIT DETECTION
+//======================================================
+
+var bool longT3Hit = false
+var bool shortT3Hit = false
+
+// Reset on new trade
+if longEntry
+    longT3Hit := false
+
+if shortEntry
+    shortT3Hit := false
+
+// Detect T3 Hit
+if longTradeActive and longT2Hit and high >= longTarget3
+    longT3Hit := true
+
+if shortTradeActive and shortT2Hit and low <= shortTarget3
+    shortT3Hit := true
+       
