@@ -1394,4 +1394,27 @@ if longTradeActive and longT2Hit and high >= longTarget3
 
 if shortTradeActive and shortT2Hit and low <= shortTarget3
     shortT3Hit := true
-       
+  //======================================================
+// MODULE 3.5 - PART 5
+// BREAK-EVEN STATUS
+//======================================================
+
+breakEvenActive = (longTradeActive and longT1Hit) or (shortTradeActive and shortT1Hit)
+
+breakEvenStatus = breakEvenActive ? "ACTIVE" : "PENDING"
+//======================================================
+// MODULE 3.5 - PART 6
+// TRAILING STATUS
+//======================================================
+
+trailingActive = (longTradeActive and longT2Hit) or (shortTradeActive and shortT2Hit)
+
+trailingStatus = trailingActive ? "ACTIVE" : "OFF"
+ //======================================================
+// MODULE 3.5 - PART 7
+// TRADE CLOSED STATUS
+//======================================================
+
+tradeClosed = (longTradeActive and longT3Hit) or (shortTradeActive and shortT3Hit)
+
+tradeResult = tradeClosed ? "TARGET ACHIEVED" : "RUNNING"
