@@ -1252,3 +1252,47 @@ plot(
     color = color.red,
     linewidth = 3
 )
+//======================================================
+// MODULE 3.4
+// DYNAMIC RISK : REWARD ENGINE
+//======================================================
+
+groupRR = "🎯 Risk : Reward"
+
+enableRREngine = input.bool(true, "Enable RR Engine", group=groupRR)
+
+rrTarget1 = input.float(1.0, "Target 1 (R)", step=0.5, group=groupRR)
+rrTarget2 = input.float(2.0, "Target 2 (R)", step=0.5, group=groupRR)
+rrTarget3 = input.float(3.0, "Target 3 (R)", step=0.5, group=groupRR)
+
+// Risk Distance
+longRiskPoints = math.abs(close - longStopLoss)
+shortRiskPoints = math.abs(shortStopLoss - close)
+
+//======================================================
+// MODULE 3.4 - PART 2
+// TARGET PRICE ENGINE
+//======================================================
+
+// Long Targets
+longTarget1 = enableRREngine ? close + (longRiskPoints * rrTarget1) : na
+longTarget2 = enableRREngine ? close + (longRiskPoints * rrTarget2) : na
+longTarget3 = enableRREngine ? close + (longRiskPoints * rrTarget3) : na
+
+// Short Targets
+shortTarget1 = enableRREngine ? close - (shortRiskPoints * rrTarget1) : na
+shortTarget2 = enableRREngine ? close - (shortRiskPoints * rrTarget2) : na
+shortTarget3 = enableRREngine ? close - (shortRiskPoints * rrTarget3) : na
+
+//======================================================
+// MODULE 3.4 - PART 3
+// TARGET PLOTS
+//======================================================
+
+plot(longTarget1, "Long T1", color=color.lime)
+plot(longTarget2, "Long T2", color=color.green)
+plot(longTarget3, "Long T3", color=color.teal)
+
+plot(shortTarget1, "Short T1", color=color.orange)
+plot(shortTarget2, "Short T2", color=color.red)
+plot(shortTarget3, "Short T3", color=color.maroon)
