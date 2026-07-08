@@ -731,7 +731,7 @@ instDashBg = input.color(color.new(color.black, 10), "Dashboard Background", gro
 
 instDashText = input.color(color.white, "Dashboard Text", group=groupInstDash)
 
-var table instDashboard = table.new(position.top_right, 2, 15, border_width=1)
+var table instDashboard = table.new(position.top_right, 2, 25, border_width=1)
 if barstate.islast and showInstDash
     table.clear(instDashboard, 0, 0)
 
@@ -890,3 +890,154 @@ decisionReason =
      "Institutional Bearish Confirmation"
 
 decisionConfidence = str.tostring(finalConfidence) + "%"
+//=============================================================================
+// MODULE 2.7 - PART D
+// DASHBOARD INTEGRATION
+//=============================================================================
+
+table.cell(instDashboard, 0, 6, "Final AI", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 6, str.tostring(finalAIScore), bgcolor=instDashBg, text_color=color.lime)
+
+table.cell(instDashboard, 0, 7, "Decision", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 7, institutionalDecision, bgcolor=instDashBg, text_color=color.yellow)
+
+table.cell(instDashboard, 0, 8, "Confidence", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 8, decisionConfidence, bgcolor=instDashBg, text_color=color.aqua)
+
+table.cell(instDashboard, 0, 9, "Reason", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 9, decisionReason, bgcolor=instDashBg, text_color=color.orange)
+//======================================================
+// MODULE 2.8 - PART A
+// MARKET STRUCTURE PANEL
+//======================================================
+
+table.cell(instDashboard, 0, 10, "BOS", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 10, bullishBOS ? "BULLISH" : bearishBOS ? "BEARISH" : "-", bgcolor=instDashBg, text_color=color.yellow)
+
+table.cell(instDashboard, 0, 11, "CHOCH", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 11, bullishCHOCH ? "BULLISH" : bearishCHOCH ? "BEARISH" : "-", bgcolor=instDashBg, text_color=color.aqua)
+
+table.cell(instDashboard, 0, 12, "Liquidity", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 12, bullishLiquiditySweep ? "BUY SIDE" : bearishLiquiditySweep ? "SELL SIDE" : "-", bgcolor=instDashBg, text_color=color.orange)
+
+table.cell(instDashboard, 0, 13, "Order Block", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 13, bullishOB ? "BULLISH" : bearishOB ? "BEARISH" : "-", bgcolor=instDashBg, text_color=color.lime)
+
+table.cell(instDashboard, 0, 14, "FVG", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 14, bullishFVG ? "BULLISH" : bearishFVG ? "BEARISH" : "-", bgcolor=instDashBg, text_color=color.fuchsia)
+//======================================================
+// MODULE 2.8 - PART B
+// RISK PANEL
+//======================================================
+
+table.cell(instDashboard, 0, 15, "India VIX", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 15, str.tostring(vixValue, "#.##"), bgcolor=instDashBg, text_color=vixLow ? color.lime : vixHigh ? color.red : color.orange)
+
+table.cell(instDashboard, 0, 16, "ADX", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 16, str.tostring(adxValue, "#.0"), bgcolor=instDashBg, text_color=strongTrend ? color.lime : color.orange)
+
+table.cell(instDashboard, 0, 17, "ATR", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 17, str.tostring(atrValue, "#.##"), bgcolor=instDashBg, text_color=color.aqua)
+
+table.cell(instDashboard, 0, 18, "Risk", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 18,
+     lowVolatility ? "LOW" :
+     highVolatility ? "HIGH" : "NORMAL",
+     bgcolor=instDashBg,
+     text_color=lowVolatility ? color.lime : highVolatility ? color.red : color.orange)
+ //======================================================
+// MODULE 2.8 - PART C
+// INSTITUTIONAL STATUS PANEL
+//======================================================
+
+table.cell(instDashboard, 0, 19, "EMA", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 19,
+     emaFast > emaSlow ? "BULLISH" : "BEARISH",
+     bgcolor=instDashBg,
+     text_color=emaFast > emaSlow ? color.lime : color.red)
+
+table.cell(instDashboard, 0, 20, "VWAP", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 20,
+     close > vwapValue ? "ABOVE" : "BELOW",
+     bgcolor=instDashBg,
+     text_color=close > vwapValue ? color.lime : color.red)
+
+table.cell(instDashboard, 0, 21, "Volume", bgcolor=instDashBg, text_color=instDashText)
+table.cell(instDashboard, 1, 21,
+     volumeSpike ? "SPIKE" : "NORMAL",
+     bgcolor=instDashBg,
+     text_color=volumeSpike ? color.lime : color.orange)
+
+table.cell(instDashboard, 0, 22, "RVOL", bgcolor=instDashBg, text_color=instDashText)
+
+table.cell(instDashboard, 1, 22,
+     "--",
+     bgcolor=instDashBg,
+     text_color=color.gray)
+     //====================================================
+// MODULE 2.8 PART D
+// PROFESSIONAL STATUS BANNER
+//====================================================
+
+bannerText =
+     finalAIScore >= 85 ? "🟢 STRONG BUY" :
+     finalAIScore >= 70 ? "🟢 BUY" :
+     finalAIScore >= 50 ? "🟡 WAIT" :
+     finalAIScore >= 30 ? "🟠 SELL" :
+     "🔴 STRONG SELL"
+
+bannerColor =
+     finalAIScore >= 85 ? color.lime :
+     finalAIScore >= 70 ? color.green :
+     finalAIScore >= 50 ? color.yellow :
+     finalAIScore >= 30 ? color.orange :
+     color.red
+ //====================================================
+// MODULE 2.8 PART E
+// STATUS BANNER
+//====================================================
+
+var label statusBanner = na
+
+if barstate.islast
+    label.delete(statusBanner)
+
+    statusBanner := label.new(
+         bar_index,
+         high + atrValue * 2,
+         bannerText + "\nAI Score : " + str.tostring(finalAIScore, "#"),
+         style = label.style_label_down,
+         color = bannerColor,
+         textcolor = color.black,
+         size = size.large)    
+
+//====================================================
+// MODULE 2.9 - PART A
+// INSTITUTIONAL ALERT ENGINE
+//====================================================
+
+strongBuyAlert = finalAIScore >= 85
+
+buySignalAlert = finalAIScore >= 70 and finalAIScore < 85
+
+strongSellAlert = finalAIScore <= 15
+
+sellSignalAlert = finalAIScore <= 30 and finalAIScore > 15
+
+alertWait = finalAIScore > 30 and finalAIScore < 70
+
+//====================================================
+// MODULE 2.9 - PART B
+// ALERT CONDITIONS
+//====================================================
+
+alertcondition(strongBuyAlert, title="GK Strong Buy", message="GK AI Trader Pro : STRONG BUY")
+
+alertcondition(buySignalAlert, title="GK Buy", message="GK AI Trader Pro : BUY")
+
+alertcondition(strongSellAlert, title="GK Strong Sell", message="GK AI Trader Pro : STRONG SELL")
+
+alertcondition(sellSignalAlert, title="GK Sell", message="GK AI Trader Pro : SELL")
+
+alertcondition(alertWait, title="GK Wait", message="GK AI Trader Pro : WAIT")
+
