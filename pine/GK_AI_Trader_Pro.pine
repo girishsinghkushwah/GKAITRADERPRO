@@ -1296,3 +1296,21 @@ plot(longTarget3, "Long T3", color=color.teal)
 plot(shortTarget1, "Short T1", color=color.orange)
 plot(shortTarget2, "Short T2", color=color.red)
 plot(shortTarget3, "Short T3", color=color.maroon)
+
+//======================================================
+// MODULE 3.5 - PART 1
+// SMART TRADE MANAGEMENT
+//======================================================
+
+
+// Trade Status
+tradeStatus =
+     longEntry ? "LONG ACTIVE" :
+     shortEntry ? "SHORT ACTIVE" :
+     "NO TRADE"
+
+// Trade Direction
+tradeDirection =
+     longEntry ? 1 :
+     shortEntry ? -1 :
+     0
